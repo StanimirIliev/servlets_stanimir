@@ -1,0 +1,38 @@
+body {
+  background-color: #255;
+}
+#container {
+  width: 30%;
+  margin-left: 30%;
+}
+label {
+  float: right;
+}
+a, label {
+  text-decoration: none;
+  color: #fff;
+  font-size: 30pt;
+  text-shadow: 3px 3px #000;
+}
+a:hover {
+  color: #7bd;
+}
+button {
+  width: 75%;
+  height: 50px;
+  margin-top: 10%;
+  margin-left: 12.5%;
+  color: #eee;
+  font-weight: bold;
+  font-size: 25pt;
+  background-color: #257;
+  border: none;
+  border-radius: 15px;
+}
+button:hover {
+  color: #fff;
+  background-color: #368;
+}
+button:active {
+  background-color: #479;
+}

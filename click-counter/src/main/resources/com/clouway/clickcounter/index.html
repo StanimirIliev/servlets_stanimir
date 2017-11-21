@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ClickCounter</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+      <script src="js/reset.js"></script>
+        <div id="container">
+            <a href="http://127.0.0.1:8080/ClickCounter?link=link1">Link 1</a>
+            <label id="link1">Clicked: 0</label><br>
+            <a href="http://127.0.0.1:8080/ClickCounter?link=link2">Link 2</a>
+            <label id="link2">Clicked: 0</label><br>
+            <a href="http://127.0.0.1:8080/ClickCounter?link=link3">Link 3</a>
+            <label id="link3">Clicked: 0</label><br>
+            <button onclick="reset()">Reset</button>
+        </div>
+    </body>
+</html>
