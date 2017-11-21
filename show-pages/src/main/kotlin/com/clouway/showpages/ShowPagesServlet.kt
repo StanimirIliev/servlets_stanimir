@@ -14,12 +14,16 @@ class ShowPagesServlet : HttpServlet() {
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
         resp.contentType = "text/html; charset=utf-8"
         val out = resp.writer
-        if (req.getParameter("pageName") !== null) {
-            pages.filter { it.name == req.getParameter("pageName") }.forEach {
-                out.print(it.doc)
+        when {
+            req.getParameter("pageName") !== null -> {
+                pages.filter { it.name == req.getParameter("pageName") }.forEach {
+                    out.print(it.doc)// Rendering page
+                }
             }
-        } else {
-            out.print(doc)
+            req.getParameter("redirect") !== null -> {
+                resp.sendRedirect("/HandlerServlet?pageName=${req.getParameter("redirect")}")
+            }
+            else -> out.print(doc)
         }
     }
 
