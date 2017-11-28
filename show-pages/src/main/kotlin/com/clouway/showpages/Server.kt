@@ -5,7 +5,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler
 import javax.servlet.ServletContextEvent
 import javax.servlet.ServletContextListener
 
-class Server(val port: Int) {
+class Server(port: Int) {
     private val server = Server(port)
 
     fun start() {
@@ -14,12 +14,12 @@ class Server(val port: Int) {
         context.addEventListener(object : ServletContextListener {
             override fun contextInitialized(servletContextEvent: ServletContextEvent) {
                 val servletContext = servletContextEvent.servletContext
-                servletContext.addServlet("resources", ResourceServlet())
+                servletContext.addServlet("Resource Servlet", ResourceServlet())
                         .addMapping("/assets/*")
-                servletContext.addServlet("handlerServlet", HandlerServlet())
-                        .addMapping("/HandlerServlet")
-                servletContext.addServlet("showPages", ShowPagesServlet())
-                        .addMapping("/ShowPages")
+                servletContext.addServlet("View", View())
+                        .addMapping("/View")
+                servletContext.addServlet("Controller", Controller())
+                        .addMapping("/Index")
             }
 
             override fun contextDestroyed(sce: ServletContextEvent?) {

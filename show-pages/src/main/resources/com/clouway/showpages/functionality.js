@@ -1,6 +1,6 @@
 function redirect(nameOfPage) {
-  document.location = "/ShowPages?redirect=" + nameOfPage
+  document.location = "/Index?redirect=" + nameOfPage
 }
 function back() {
-  document.location = "/ShowPages"
+  document.location = "/Index"
 }

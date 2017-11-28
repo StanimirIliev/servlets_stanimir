@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class ResourceServlet: HttpServlet() {
+class ResourceServlet : HttpServlet() {
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
         val uri = req.requestURI
         if(!uri.contains("/")) {
