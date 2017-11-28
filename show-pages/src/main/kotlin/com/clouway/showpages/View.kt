@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 class View : HttpServlet() {
-    private var doc = View::class.java.getResourceAsStream("pageName.html").readBytes()
+    private var doc = View::class.java.getResourceAsStream("targetPageTemplate.html").readBytes()
             .toString(Charset.defaultCharset())
 
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
@@ -14,14 +14,14 @@ class View : HttpServlet() {
         val out = resp.writer
         if (req.getParameter("pageName") !== null) {
             out.print(doc.replace(
-                    "<h2 id=\"pageName\"></h2>",
-                    "<h2 id=\"pageName\">${req.getParameter("pageName")} " +
+                    "<h2></h2>",
+                    "<h2>${req.getParameter("pageName")} " +
                             "has been redirected to me</h2>"
             ))
         } else {
             out.print(doc.replace(
-                    "<h2 id=\"pageName\"></h2>",
-                    "<h2 id=\"pageName\">No page has been redirected to me</h2>"
+                    "<h2></h2>",
+                    "<h2>No page has been redirected to me</h2>"
             ))
         }
     }
