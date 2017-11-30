@@ -10,7 +10,7 @@ import org.eclipse.jetty.server.handler.ContextHandler
 
 
 
-class Server (val portNumber: Int) {
+class Server (portNumber: Int) {
     private val server: Server = Server(portNumber)
 
     fun start() {
@@ -21,8 +21,8 @@ class Server (val portNumber: Int) {
             override fun contextInitialized(servletContextEvent: ServletContextEvent) {
                 val servletContext = servletContextEvent.servletContext
 
-                servletContext.addServlet("clickCounter", ClickCounterServlet()).addMapping("/ClickCounter")
-                servletContext.addServlet("resources", ResourcesServlet()).addMapping("/assets/*")
+                servletContext.addServlet("Click Counter", ClickCounterServlet()).addMapping("/ClickCounter")
+                servletContext.addServlet("Resources", ResourcesServlet()).addMapping("/assets/*")
 
             }
 

@@ -11,48 +11,42 @@ class ClickCounterServlet : HttpServlet() {
 
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
         resp.contentType = "text/html; charset=utf-8"
+        val initialLinks = ArrayList<Link>()
+        initialLinks.addAll(listOf(
+                Link("link1", 0),
+                Link("link2", 0),
+                Link("link3", 0)))
         val out = resp.writer
         val session = req.getSession(true)
 
         if (session.getAttribute("links") == null) {
-            session.setAttribute("links", getLinks(doc))
+            session.setAttribute("links", initialLinks)
+            out.print(updateDoc(initialLinks))
+            return
         }
 
+        val links = session.getAttribute("links") as List<Link>
         when {
             req.getParameter("link") !== null -> {
-                val links = session.getAttribute("links") as List<Link>
-                links
-                        .filter { req.getParameter("link") == it.value }
-                        .forEach {
-                            doc = doc.replace(
-                                    "<label id=\"${it.value}\">Clicked: ${it.visits}</label>",
-                                    "<label id=\"${it.value}\">Clicked: ${++it.visits}</label>")
-                        }
-                session.setAttribute("links", links)
+                links.filter { req.getParameter("link") == it.value }.forEach {it.visits++}
             }
             req.getParameter("reset") !== null -> {
-                val links = session.getAttribute("links") as List<Link>
-                links.forEach {
-                    doc = doc.replace(
-                            "<label id=\"${it.value}\">Clicked: ${it.visits}</label>",
-                            "<label id=\"${it.value}\">Clicked: 0</label>")
-                    it.visits = 0
-                }
-                session.setAttribute("links", links)
+                links.forEach {it.visits = 0}
             }
         }
-        out.print(doc)
+        out.print(updateDoc(links))
+        session.setAttribute("links", links)
     }
 
-    private fun getLinks(doc: String): List<Link> {
-        val links = ArrayList<Link>()
-        var cursor = doc.indexOf("<a ", ignoreCase = true)
-        while (cursor != -1) {
-            cursor = doc.indexOf("?link=", cursor) + 6
-            links.add(Link(doc.substring(cursor,
-                    doc.indexOf("\"", cursor)), 0))
-            cursor = doc.indexOf("<a ", cursor + 1, ignoreCase = true)
+    private fun updateDoc(links: List<Link>): String {
+        var replaceString = ""
+        links.forEach {
+            replaceString +=
+                    "   <a href=\"/ClickCounter?link=${it.value}\">${it.value
+                            .replaceFirst('l', 'L')}</a>\n" +
+                            "   <label>Clicked: ${it.visits}</label><br>\n"
         }
-        return links
+        return doc.replace("<div id=\"container\">",
+                "<div id=\"container\">\n$replaceString")
     }
 }
